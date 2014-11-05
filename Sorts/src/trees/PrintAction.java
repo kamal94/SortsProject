@@ -19,7 +19,7 @@ public class PrintAction implements NodeVisitor
     public void visit(Object data)
 	{
         if ( data != null )
-            System.out.println (data.toString());
+            System.out.print (data.toString()+ ". ");
 	}
 
 }

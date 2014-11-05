@@ -1,3 +1,5 @@
+package trees;
+
 /*
     Interface for NodeVisitor
     @author Alyce Brady

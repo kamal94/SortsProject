@@ -136,7 +136,7 @@ public class BinaryTree
 
 	/** Traverses the tree in breadth-first order.
 	        @param action an object that will act on all the nodes in the tree
-	*/
+    */
 	public void breadthFirstTraversal(NodeVisitor action)
 	{
 		Queue queue = new Queue();
@@ -153,6 +153,177 @@ public class BinaryTree
 		}
 	}	
     
+	/**
+	 * Traverses the tree in depth-first (in-order) order.
+	 * @param action	an object that will act on the nodes in the tree
+	 * as they are visited
+	 */
+	public void inOrderDepthFirstTraversal(NodeVisitor action){
+		
+			
+			if(this.getElement()==null)
+				return;
+			
+			
+			this.left.inOrderDepthFirstTraversal(action);
+			action.visit(this.getElement());
+			this.right.inOrderDepthFirstTraversal(action);
+			
+	}
+	
+	
+	/**
+	 * Traverses the tree in depth-first (in-order) order.
+	 * @param action	an object that will act on the nodes in the tree
+	 * as they are visited
+	 */
+	public void postOrderDepthFirstTraversal(NodeVisitor action){
+		
+			
+			if(this.getElement()==null)
+				return;
+			
+			
+			this.left.postOrderDepthFirstTraversal(action);
+			this.right.postOrderDepthFirstTraversal(action);
+			action.visit(this.getElement());			
+	}
     
-
+	/**
+	 * verifies thif a tree is a 
+	 * @return
+	 */
+	public boolean isLeaf(){
+		if(this.left==null)
+			return true;
+		return false;
+	}
+	
+	/**
+	 * Keeps track of the number of leaves in the tree.
+	 */
+	public void numLeafs(CounterActionVisitor action){
+		Queue queue = new Queue();
+		
+		queue.enqueue(this);
+		
+		while(!queue.isEmpty()){
+			BinaryTree tree = (BinaryTree) queue.dequeue();
+			if(tree.left.getElement()==null && tree.right.getElement()==null){
+				action.visit(tree.getElement());
+			}else {
+				if (tree.left.getElement()!=null)
+					queue.enqueue(tree.left);
+				
+				if(tree.right.getElement()!=null)
+					queue.enqueue(tree.right);
+			}
+		}
+		
+		action.printCount();
+	}
+	
+	public void numNodes(CounterActionVisitor action){
+		Queue queue = new Queue();
+		
+		queue.enqueue(this);
+		
+		while(!queue.isEmpty()){
+			BinaryTree tree = (BinaryTree) queue.dequeue();
+			if(tree.left.getElement()!=null || tree.right.getElement()!=null){
+				action.visit(tree.getElement());
+			}
+		}
+		
+		action.printCount();
+	}
+	
+	/**
+	 * Measures the depth of the tree
+	 */
+	public int depth(){
+		int depth = 0;
+		if(data==null){
+			return depth;
+		} else {
+			depth= 1;
+		}
+		Queue queue = new Queue();
+		queue.enqueue(this);
+		
+		while(!queue.isEmpty()){
+			BinaryTree tree = (BinaryTree) queue.dequeue();
+			if(tree.left.getElement()!=null){
+				queue.enqueue(tree.left);
+				depth++;
+			}
+		}
+		
+		return depth;
+	}
+	
+	/**
+	 * Traverses the tree to check if it contains the passed element
+	 * @param object	the element that is searched for in the tree
+	 * @return	boolean	returns true if the tree contains the object passed,
+	 * returns false if it doesn't 
+	 */
+	public boolean contains(Object object){
+		Queue queue = new Queue();
+		
+		queue.enqueue(this);
+		
+		while(!queue.isEmpty()){
+			BinaryTree tree = (BinaryTree) queue.dequeue();
+			
+			if((object).equals(tree.getElement())){
+				return true;
+			}
+			
+			if(!tree.isLeaf()){
+				queue.enqueue(tree.left);
+				queue.enqueue(tree.right);
+			}
+		}
+		return false;
+	}
+	
+	public int numOccurences(Object object){
+		
+		int occur = 0;
+		Queue queue = new Queue();
+		queue.enqueue(this);
+		
+		while(!queue.isEmpty()){
+			BinaryTree tree = (BinaryTree) queue.dequeue();
+			
+			if((object).equals(tree.getElement())){
+				occur++;
+			}
+			
+			if(!tree.isLeaf()){
+				queue.enqueue(tree.left);
+				queue.enqueue(tree.right);
+			}
+		}
+		
+		return occur;
+	}
+	
+	public void ExtremeValuesTraversal(NodeVisitor action){
+		Queue queue = new Queue();
+		queue.enqueue(this);
+		while( ! queue.isEmpty() )
+		{
+			BinaryTree tree = (BinaryTree)queue.dequeue();
+			if ( ! tree.isEmpty() )
+            {
+    			action.visit(tree.getElement());
+    			queue.enqueue(tree.leftTree());
+    			queue.enqueue(tree.rightTree());
+            }
+		}
+		
+	}
+	
 }    //end class BinaryTree
