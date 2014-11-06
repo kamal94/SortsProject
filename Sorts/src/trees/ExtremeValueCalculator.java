@@ -16,11 +16,12 @@ public class ExtremeValueCalculator implements NodeVisitor {
 			max =  data1;
 			min = data1;
 		}
-		if((data1).compareTo(min)<0)
+		if(data1.compareTo(min)<0)
 			min =  data1;
-		if(data1.compareTo(min)>0){
+		if(data1.compareTo(max)>0){
 			max = data1;
 		}
+		
 	}
 	
 	public Comparable getMax(){

@@ -11,7 +11,7 @@ package trees;
 public class BinaryTreeLab
 {
 
-	public static void main(String args[])
+	public static void main(String args[]) throws Exception
 	{
 		// Debug.turnOn();
 		Debug.turnOff();
@@ -45,13 +45,16 @@ public class BinaryTreeLab
 		binaryTree.breadthFirstTraversal(printer);
 		
 		//traverse the tree in-order depth-first order to see what you have done.
+		System.out.println("\n" + "\n" + "******Traversing Tree: pre-order-depth-first order******");
+		binaryTree.preOrderDepthFirstTraversal(printer);
+		
+		//traverse the tree in-order depth-first order to see what you have done.
 		System.out.println("\n" + "\n" + "******Traversing Tree: in-order-depth-first order******");
 		binaryTree.inOrderDepthFirstTraversal(printer);
 
 		//traverse the tree post-order depth-first order to see what you have done.
 		System.out.println("\n" + "\n" + "******Traversing Tree: post-order-depth-first order******");
 		binaryTree.postOrderDepthFirstTraversal(printer);
-		
 		
 			
 		AddActionVisitor adder = new AddActionVisitor();
@@ -82,6 +85,26 @@ public class BinaryTreeLab
 		System.out.println("******Finding extreme values: breadth-first order******");
 		binaryTree.breadthFirstTraversal(extremeCalc);
 		extremeCalc.printMinMax();
+
+		BinaryTree tree2 = new BinaryTree();
+
+		//insert elements in level order here.
+				try {
+					tree2.add(new Integer(12));
+					tree2.add(new Integer(7));
+					tree2.add(new Integer(3));
+					tree2.add(new Integer(4));
+					tree2.add(new Integer(8));
+					tree2.add(new Integer(25));
+					tree2.add(new Integer(0));
+					tree2.add(new Integer(142));
+					tree2.add(new Integer(17));
+					tree2.add(new Integer(26));
+				} catch (WrongInputException e) {
+					e.printStackTrace();
+				}
+				
+		System.out.println(binaryTree.equal(tree2));
 	}
 
 }	//end class BinaryTreeLab

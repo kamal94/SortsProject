@@ -152,6 +152,27 @@ public class BinaryTree
             }
 		}
 	}	
+	
+
+	/**
+	 * Traverses the tree in depth-first (in-order) order.
+	 * @param action	an object that will act on the nodes in the tree
+	 * as they are visited
+	 */
+	public void preOrderDepthFirstTraversal(NodeVisitor action){
+		
+		
+		if(this.getElement()==null)
+			return;
+		
+
+		action.visit(this.getElement());
+		this.left.preOrderDepthFirstTraversal(action);
+		this.right.preOrderDepthFirstTraversal(action);
+			
+	}
+	
+	
     
 	/**
 	 * Traverses the tree in depth-first (in-order) order.
@@ -326,4 +347,22 @@ public class BinaryTree
 		
 	}
 	
+	public boolean equal(Object object) throws Exception{
+		if(!(object instanceof BinaryTree)){
+			System.out.println("The object is not a BinaryTree");
+			throw new Exception();
+		}
+		
+		
+		
+		BinaryTree tree = (BinaryTree) object;
+		if((this.leftTree()==null) && tree.leftTree()==null){
+			return true;
+		}
+		if(this.getElement()==tree.getElement() && this.leftTree().equal(tree.leftTree()) && this.rightTree().equal(tree.rightTree())){
+			return true;
+		}
+		
+		return false;
+	}
 }    //end class BinaryTree
