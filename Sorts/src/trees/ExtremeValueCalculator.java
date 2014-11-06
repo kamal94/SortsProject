@@ -23,17 +23,10 @@ public class ExtremeValueCalculator implements NodeVisitor {
 		}
 		
 	}
-	
-	public Comparable getMax(){
-		return max;
-	}
-	
-	public Comparable getMin(){
-		return min;
-	}
-	
-	public void printMinMax(){
-		System.out.println("Min: "+ min+ ". Max: "+ max+ ".");
+
+	@Override
+	public void completeAction() {
+		System.out.print("Min: "+ min+ ". Max: "+ max+ ".");
 	}
 }
 

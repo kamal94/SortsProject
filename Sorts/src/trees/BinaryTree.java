@@ -17,9 +17,10 @@ Modifications:
         also modified to use NodeAction interface.
 
 Modifications:
-    Modifier: studentName
-    Modification Date: currentDate
-    Modifications Made:
+    Modifier: Kamalaldin Kamalaldin
+    Modification Date: 11/06/2014
+    Modifications Made: Added many method to improve functionality, like depth traversal
+    method and equal() method.
 
 Description:
     This file contains some of the implementation of a BinaryTree class. 
@@ -45,12 +46,12 @@ Description:
 
 public class BinaryTree
 {
-    //data:
+    //instance variables
     protected Object data;
     protected BinaryTree left;
     protected BinaryTree right;
         
-    /*tested*/
+
     /** Creates an empty binary tree with no data and no children. */
     public BinaryTree()
     {
@@ -60,43 +61,42 @@ public class BinaryTree
         right = null;
     }
      
-    /*tested*/
     /** Tests whether this is an empty tree.
             @return true if the tree is empty; false otherwise
     */
     public boolean isEmpty()
-    {
-        return data == null;
-    }
-   
-    /*tested*/
-    /** Gets the data associated with the root node of this particular tree
-        (recall recursive definition of trees).
-            @return value associated with tree's root node; 
+    {return data == null;}
+
+	/**
+	 * verifies if a tree is a leaf 
+	 * @return boolean true if the node has empty trees as children, false if 
+	 * the node has non-empty trees.
+	 */
+	public boolean isLeaf(){
+		if(this.leftTree().isEmpty() && this.rightTree().isEmpty())
+			return true;
+		return false;
+	}
+	
+/** Gets the data associated with the root node of this particular tree
+    (recall recursive definition of trees).
+    @return value associated with tree's root node; 
                           null if tree is empty
     */
     public Object getElement()
-    {
-        return data;
-    }
+    {return data;}
 
-    /*tested*/
     /** Gets the left child of the current tree.
             @return the left child (a tree)
     */
     public BinaryTree leftTree()
-    {
-        return left;
-    }
+    { return left;}
 
-    /*tested*/
     /** Gets the right child of the current tree.
             @return the right child (a tree)
     */
     public BinaryTree rightTree()
-    {
-        return right;
-    }
+    {return right;}
 
     /** Adds elements to a binary tree.  This implementation adds the
         elements in breadth-first (top-down, left-to-right) order.
@@ -135,7 +135,7 @@ public class BinaryTree
     }
 
 	/** Traverses the tree in breadth-first order.
-	        @param action an object that will act on all the nodes in the tree
+	    @param action an object that will act on all the nodes in the tree
     */
 	public void breadthFirstTraversal(NodeVisitor action)
 	{
@@ -160,16 +160,12 @@ public class BinaryTree
 	 * as they are visited
 	 */
 	public void preOrderDepthFirstTraversal(NodeVisitor action){
-		
-		
 		if(this.getElement()==null)
 			return;
-		
 
 		action.visit(this.getElement());
 		this.left.preOrderDepthFirstTraversal(action);
 		this.right.preOrderDepthFirstTraversal(action);
-			
 	}
 	
 	
@@ -180,16 +176,12 @@ public class BinaryTree
 	 * as they are visited
 	 */
 	public void inOrderDepthFirstTraversal(NodeVisitor action){
+		if(this.getElement()==null)
+			return;
 		
-			
-			if(this.getElement()==null)
-				return;
-			
-			
-			this.left.inOrderDepthFirstTraversal(action);
-			action.visit(this.getElement());
-			this.right.inOrderDepthFirstTraversal(action);
-			
+		this.left.inOrderDepthFirstTraversal(action);
+		action.visit(this.getElement());
+		this.right.inOrderDepthFirstTraversal(action);
 	}
 	
 	
@@ -199,38 +191,27 @@ public class BinaryTree
 	 * as they are visited
 	 */
 	public void postOrderDepthFirstTraversal(NodeVisitor action){
+		if(this.getElement()==null)
+			return;
 		
-			
-			if(this.getElement()==null)
-				return;
-			
-			
-			this.left.postOrderDepthFirstTraversal(action);
-			this.right.postOrderDepthFirstTraversal(action);
-			action.visit(this.getElement());			
-	}
-    
-	/**
-	 * verifies thif a tree is a 
-	 * @return
-	 */
-	public boolean isLeaf(){
-		if(this.left==null)
-			return true;
-		return false;
+		this.left.postOrderDepthFirstTraversal(action);
+		this.right.postOrderDepthFirstTraversal(action);
+		action.visit(this.getElement());			
 	}
 	
 	/**
 	 * Keeps track of the number of leaves in the tree.
+	 * @param action	a NodeVisitor that performs an action on 
+	 * every node in the tree
 	 */
-	public void numLeafs(CounterActionVisitor action){
+	public void numLeafs(NodeVisitor action){
 		Queue queue = new Queue();
 		
 		queue.enqueue(this);
 		
 		while(!queue.isEmpty()){
 			BinaryTree tree = (BinaryTree) queue.dequeue();
-			if(tree.left.getElement()==null && tree.right.getElement()==null){
+			if(tree.isLeaf()){
 				action.visit(tree.getElement());
 			}else {
 				if (tree.left.getElement()!=null)
@@ -240,31 +221,39 @@ public class BinaryTree
 					queue.enqueue(tree.right);
 			}
 		}
-		
-		action.printCount();
 	}
 	
-	public void numNodes(CounterActionVisitor action){
+	/**
+	 * Counts the number of nodes in a tree
+	 * @param action	a NodeVisitor that performs an action on 
+	 * every node in the tree
+	 */
+	public void numNodes(NodeVisitor action){
 		Queue queue = new Queue();
 		
 		queue.enqueue(this);
 		
 		while(!queue.isEmpty()){
 			BinaryTree tree = (BinaryTree) queue.dequeue();
-			if(tree.left.getElement()!=null || tree.right.getElement()!=null){
-				action.visit(tree.getElement());
+			
+			if (tree.left.getElement()!=null)
+				queue.enqueue(tree.left);
+			
+			if(tree.right.getElement()!=null)
+				queue.enqueue(tree.right);
+			
+			action.visit(tree.getElement());
 			}
-		}
 		
-		action.printCount();
 	}
 	
 	/**
 	 * Measures the depth of the tree
+	 * @return depth the depth of the tree
 	 */
 	public int depth(){
 		int depth = 0;
-		if(data==null){
+		if(this.isEmpty()){
 			return depth;
 		} else {
 			depth= 1;
@@ -309,6 +298,12 @@ public class BinaryTree
 		return false;
 	}
 	
+	/**
+	 * Traverses through the tree and counts every time a node 
+	 * in the tree has the same value as the passed object
+	 * @param object	the object to be searched for
+	 * @return	occur	the number of occurances of the object passed in the tree
+	 */
 	public int numOccurences(Object object){
 		
 		int occur = 0;
@@ -322,15 +317,20 @@ public class BinaryTree
 				occur++;
 			}
 			
-			if(!tree.isLeaf()){
+			if(!tree.leftTree().isEmpty())
 				queue.enqueue(tree.left);
-				queue.enqueue(tree.right);
-			}
+			if(!tree.rightTree().isEmpty())
+				queue.enqueue(tree.rightTree());
 		}
 		
 		return occur;
 	}
 	
+	/**
+	 * Traverses the tree and determines the maximum and minimum
+	 * values within it.
+	 * @param action	a Nodevisitor that visits each node
+	 */
 	public void ExtremeValuesTraversal(NodeVisitor action){
 		Queue queue = new Queue();
 		queue.enqueue(this);
@@ -347,6 +347,12 @@ public class BinaryTree
 		
 	}
 	
+	/**
+	 * Determines if the tree is equal to the passed tree.
+	 * @param object	the tree that is being compared
+	 * @return 	boolean	true if the two trees are equal, false if not
+	 * @throws Exception	thrwows an exception if the object passed is not a tree
+	 */
 	public boolean equal(Object object) throws Exception{
 		if(!(object instanceof BinaryTree)){
 			System.out.println("The object is not a BinaryTree");
@@ -354,12 +360,14 @@ public class BinaryTree
 		}
 		
 		
-		
 		BinaryTree tree = (BinaryTree) object;
 		if((this.leftTree()==null) && tree.leftTree()==null){
 			return true;
 		}
-		if(this.getElement()==tree.getElement() && this.leftTree().equal(tree.leftTree()) && this.rightTree().equal(tree.rightTree())){
+		if((this.leftTree()==null && tree.rightTree()!=null) || (this.rightTree()!=null &&tree.rightTree()==null)){
+			return false;
+		}
+		if(this.getElement().equals(tree.getElement()) && this.leftTree().equal(tree.leftTree()) && this.rightTree().equal(tree.rightTree())){
 			return true;
 		}
 		

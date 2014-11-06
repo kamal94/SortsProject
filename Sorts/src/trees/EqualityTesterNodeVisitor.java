@@ -9,7 +9,8 @@ public class EqualityTesterNodeVisitor implements NodeVisitor {
 		original +=data.toString()+ " ";
 	}
 
-	public static void printAll(){
-		System.out.println(original);
+	
+	public void completeAction(){
+		System.out.print(original);
 	}
 }

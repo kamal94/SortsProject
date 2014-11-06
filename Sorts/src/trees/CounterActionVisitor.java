@@ -7,12 +7,17 @@ public class CounterActionVisitor implements NodeVisitor {
 	public void visit(Object data) {
 		if(data!=null){
 			count++;
-			System.out.println(data.toString());
 		}
 	}
 	
-	public void printCount(){
+	@Override
+	/**
+	 * Completes the action of the NodeVisitor and prints the result. The value of 
+	 * count is also reset in case the NodeVisitor is used again in the future.
+	 */
+	public void completeAction() {
 		System.out.println("Number of nodes of the speicified properties in tree is: "+count);
+		count=0;
 	}
 
 }

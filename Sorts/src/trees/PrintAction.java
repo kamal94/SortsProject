@@ -22,4 +22,8 @@ public class PrintAction implements NodeVisitor
             System.out.print (data.toString()+ ". ");
 	}
 
+	@Override
+	public void completeAction() {
+	}
+
 }
