@@ -1,5 +1,10 @@
 package trees;
-
+/**
+ * A class that counts the number of nodes it visits. It resets the count and 
+ * returns the results when the action is complete.
+ * @author Kamal kamalaldin
+ *@version 11/06/2014
+ */
 public class CounterActionVisitor implements NodeVisitor {
 
 	private int count;
@@ -15,9 +20,10 @@ public class CounterActionVisitor implements NodeVisitor {
 	 * Completes the action of the NodeVisitor and prints the result. The value of 
 	 * count is also reset in case the NodeVisitor is used again in the future.
 	 */
-	public void completeAction() {
-		System.out.println("Number of nodes of the speicified properties in tree is: "+count);
+	public String completeAction() {
+		String result = "Number of nodes of the speicified properties in tree is: "+count;
 		count=0;
+		return result;
 	}
 
 }

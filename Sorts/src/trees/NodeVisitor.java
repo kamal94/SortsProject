@@ -12,6 +12,6 @@ package trees;
 public interface NodeVisitor
 {
     public void visit(Object data);
-    public void completeAction();
+    public String completeAction();
 
 }

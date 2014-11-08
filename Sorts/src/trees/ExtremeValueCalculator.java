@@ -1,5 +1,11 @@
 package trees;
-
+/**
+ * A class that keeps track of the maximum and minimum between
+ * the nodes it visits. It then resets the maximum and minimum
+ * after the action is completed and prints the results out.
+ * @author Kamal
+ * @version	11/06/2014
+ */
 public class ExtremeValueCalculator implements NodeVisitor {
 
 	private Comparable max;
@@ -25,8 +31,11 @@ public class ExtremeValueCalculator implements NodeVisitor {
 	}
 
 	@Override
-	public void completeAction() {
-		System.out.print("Min: "+ min+ ". Max: "+ max+ ".");
+	public String completeAction() {
+		String result = "Min: "+ min+ ". Max: "+ max+ ".";
+		min = null;
+		max = null;
+		return result;
 	}
 }
 

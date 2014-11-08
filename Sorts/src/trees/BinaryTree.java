@@ -244,7 +244,6 @@ public class BinaryTree
 			
 			action.visit(tree.getElement());
 			}
-		
 	}
 	
 	/**
@@ -291,8 +290,10 @@ public class BinaryTree
 			}
 			
 			if(!tree.isLeaf()){
-				queue.enqueue(tree.left);
-				queue.enqueue(tree.right);
+				if(!tree.leftTree().isEmpty())
+					queue.enqueue(tree.left);
+				if(!tree.rightTree().isEmpty())
+					queue.enqueue(tree.right);
 			}
 		}
 		return false;
@@ -329,7 +330,7 @@ public class BinaryTree
 	/**
 	 * Traverses the tree and determines the maximum and minimum
 	 * values within it.
-	 * @param action	a Nodevisitor that visits each node
+	 * @param action	a NodeVisitor that visits each node
 	 */
 	public void ExtremeValuesTraversal(NodeVisitor action){
 		Queue queue = new Queue();
@@ -351,12 +352,15 @@ public class BinaryTree
 	 * Determines if the tree is equal to the passed tree.
 	 * @param object	the tree that is being compared
 	 * @return 	boolean	true if the two trees are equal, false if not
-	 * @throws Exception	thrwows an exception if the object passed is not a tree
 	 */
-	public boolean equal(Object object) throws Exception{
+	public boolean equals(Object object){
 		if(!(object instanceof BinaryTree)){
 			System.out.println("The object is not a BinaryTree");
-			throw new Exception();
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		
@@ -367,7 +371,7 @@ public class BinaryTree
 		if((this.leftTree()==null && tree.rightTree()!=null) || (this.rightTree()!=null &&tree.rightTree()==null)){
 			return false;
 		}
-		if(this.getElement().equals(tree.getElement()) && this.leftTree().equal(tree.leftTree()) && this.rightTree().equal(tree.rightTree())){
+		if(this.getElement().equals(tree.getElement()) && this.leftTree().equals(tree.leftTree()) && this.rightTree().equals(tree.rightTree())){
 			return true;
 		}
 		

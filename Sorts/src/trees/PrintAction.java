@@ -12,10 +12,6 @@ package trees;
 
 public class PrintAction implements NodeVisitor
 {
-    public PrintAction ()
-	{
-	}
-
     public void visit(Object data)
 	{
         if ( data != null )
@@ -23,7 +19,8 @@ public class PrintAction implements NodeVisitor
 	}
 
 	@Override
-	public void completeAction() {
+	public String completeAction() {
+		return "\n";
 	}
 
 }
