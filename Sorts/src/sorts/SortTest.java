@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Kamal on 12/10/15.
  */
-public class InsertionSortTest {
+public class SortTest {
 
     @org.junit.Test
     public void testSort() throws Exception {
@@ -13,8 +13,8 @@ public class InsertionSortTest {
         for(int i = 0; i< 5; i++)
             integers[i] = 5-i;
 
-        InsertionSort<Integer> insertionSort = new InsertionSort<Integer>();
-        integers = insertionSort.sort(integers);
+        Sort<Integer> insertionSort = new Sort<Integer>();
+        integers = insertionSort.insertionSort(integers);
 
 
         Integer[] sorted = new Integer[5];

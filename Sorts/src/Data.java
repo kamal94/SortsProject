@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * A class that serves to easily provide data to sort classes
+ * A class that serves to easily provide data to insertionSort classes
  * @author Kamal Kamalaldin
  * @version 10/30/2014
  *
