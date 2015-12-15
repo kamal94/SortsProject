@@ -1,12 +1,16 @@
 package sorts;
 
 /**
+ * A class that implements multiple sort algorithms.
+ *
  * Created by Kamal on 12/10/15.
+ * @version 12/14/2015
  */
 public class Sort<T extends Comparable>{
 
     /**
      * Sorts the passed array using insertion insertionSort.
+     * Time complexity: O(n^2)
      *
      * @param ar    T[] Array of elements t.
      */
@@ -28,8 +32,14 @@ public class Sort<T extends Comparable>{
     }
 
     /**
+     * Sorts the elements of the array in-place. This method uses the QuickSort
+     * Algorithm which relies on a pivot and a command and concur approach.
+     * The pivot in this implementation will be the last element in the array.
+     * For a quick overview of the quicksort algorithm explanation:
+     * http://www.algolist.net/Algorithms/Sorting/Quicksort
+     * Time complexity: O(n^2), but in practical usage, it tends to be O(n log(n))
      *
-     * @param ar
+     * @param ar T[] An array of objects extending comparable class.
      */
     public void quickSort(T[] ar) {
         quickSortPartition(ar, 0, ar.length-1);
@@ -79,6 +89,13 @@ public class Sort<T extends Comparable>{
         System.out.println();
     }
 
+    /**
+     * Returns a string representation of the array. The string representation of the elements
+     * depend on the object's implementation of the toString method.
+     *
+     * @param ar    T[]     An array of objects extending the Comparable class.
+     * @return String A string of the elements in the array separated by a space character.
+     */
     public String arrayToString(T[] ar) {
         StringBuilder stringBuilder = new StringBuilder();
         for(T t: ar)

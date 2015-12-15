@@ -1,14 +1,17 @@
 package sorts;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Random;
 
 import static org.junit.Assert.*;
 
 /**
+ * A class that tests the Sort class and all of its sorts.
+ *
  * Created by Kamal on 12/10/15.
+ *
+ * @version 12/14/2015
  */
 public class SortTest {
 
