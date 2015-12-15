@@ -27,10 +27,25 @@ public class Sort<T extends Comparable>{
         return ar;
     }
 
+    /**
+     *
+     * @param ar
+     */
     public void quickSort(T[] ar) {
-
+        quickSortPartition(ar, 0, ar.length-1);
     }
-    public void quickSortPartition(T[] ar, int begin, int end) {
+
+    /**
+     * The partition step of quickSort. Separates the array into elements
+     * bigger than the pivot and elements greater than the pivot, then partitions
+     * those two segments recursively. The pivot is always the element in the index
+     * end.
+     *
+     * @param ar    T[]     The array to be partitioned and sorted.
+     * @param begin int     The beginning index of the segment of the array to be partitioned.
+     * @param end   int     The ending index of the segment of the array to be partitioned.
+     */
+    private void quickSortPartition(T[] ar, int begin, int end) {
         int length = end - begin + 1;
         if(length <= 1)
             return;
@@ -58,9 +73,17 @@ public class Sort<T extends Comparable>{
      *
      * @param ar T[] An array of objects extending comparable class.
      */
-    private void printArray(T[] ar) {
+    public void printArray(T[] ar) {
         for(T t: ar)
             System.out.print(t.toString() + " ");
         System.out.println();
+    }
+
+    public String arrayToString(T[] ar) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(T t: ar)
+            stringBuilder.append(t.toString() + " ");
+
+        return stringBuilder.toString();
     }
 }

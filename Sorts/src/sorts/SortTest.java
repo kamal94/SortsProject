@@ -1,5 +1,10 @@
 package sorts;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 /**
@@ -7,20 +12,63 @@ import static org.junit.Assert.*;
  */
 public class SortTest {
 
-    @org.junit.Test
-    public void testSort() throws Exception {
-        Integer[] integers = new Integer[5];
-        for(int i = 0; i< 5; i++)
-            integers[i] = 5-i;
 
-        Sort<Integer> insertionSort = new Sort<Integer>();
-        integers = insertionSort.insertionSort(integers);
+    private Integer[] unsortedInts;
+    private Integer[] sortedInts;
+    private final int ARRAY_SIZE = 1000;
 
+    @Before
+    public void initialize() {
+        sortedInts = new Integer[ARRAY_SIZE];
+        unsortedInts = new Integer[ARRAY_SIZE];
 
-        Integer[] sorted = new Integer[5];
-        for(int i = 0; i< 5; i++)
-            sorted[i] = i+1;
+        //setup sorted array
+        for(int i = 0; i < ARRAY_SIZE; i++)
+            sortedInts[i] = i;
 
-        assertEquals(integers, sorted);
+        //setup unsorted array
+        boolean[] alreadyInArray = new boolean[ARRAY_SIZE];
+        for(int i = 0; i < ARRAY_SIZE; i++) {
+            Random random = new Random();
+            int j = random.nextInt(ARRAY_SIZE);
+            while(alreadyInArray[j])
+                j = random.nextInt(ARRAY_SIZE);
+            alreadyInArray[j] = true;
+            unsortedInts[i] = j;
+        }
     }
+
+    @org.junit.Test
+    public void testInsertionSort() throws Exception {
+        Sort<Integer> sort = new Sort<Integer>();
+
+        //assert not equal before sort
+        assertNotEquals(sortedInts, unsortedInts);
+        assertNotEquals(sort.arrayToString(sortedInts), sort.arrayToString(unsortedInts));
+
+        //sort
+        sort.insertionSort(unsortedInts);
+
+        //assert equal after sort
+        assertArrayEquals(sortedInts, unsortedInts);
+        assertEquals(sort.arrayToString(sortedInts), sort.arrayToString(unsortedInts));
+    }
+
+    @org.junit.Test
+    public void testQuiskSort() throws Exception {
+        Sort<Integer> sort = new Sort<Integer>();
+
+        //assert not equal before sort
+        assertNotEquals(sortedInts, unsortedInts);
+        assertNotEquals(sort.arrayToString(sortedInts), sort.arrayToString(unsortedInts));
+
+        //sort
+        sort.quickSort(unsortedInts);
+
+        //assert equal after sort
+        assertArrayEquals(sortedInts, unsortedInts);
+        assertEquals(sort.arrayToString(sortedInts), sort.arrayToString(unsortedInts));
+    }
+
+
 }
